@@ -14,7 +14,7 @@ mongoose.connect(process.env.URI, {
 
 app.use(cors());
 app.use(express.static(`${process.cwd()}/public`));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const Schema = mongoose.Schema;
@@ -30,9 +30,19 @@ app.get("/", (req, res) => {
 
 app.post("/api/shorturl", (req, res) => {
   var original_url = req.body.url;
-  var url_to_be_tested = original_url.slice(8);
+  var url_to_be_tested =
+    original_url.slice(0, 8) === "https://"
+      ? original_url.slice(8)
+      : original_url.slice(0, 7) === "http://"
+      ? original_url.slice(7)
+      : original_url;
   console.log(url_to_be_tested.slice(4).split("/")[0]);
-  if (original_url.slice(0, 8) !== "https://")
+  if (
+    original_url.slice(0, 4) !== "http" ||
+    !original_url.includes(`http://localhost:${PORT}`) ||
+    (!url_to_be_tested.includes(".") &&
+      !original_url.includes(`http://localhost:${PORT}`))
+  )
     res.json({ error: "Invalid URL" });
   else {
     dns.lookup(
@@ -41,7 +51,7 @@ app.post("/api/shorturl", (req, res) => {
         : url_to_be_tested.split("/")[0],
       (err, address, family) => {
         if (err) console.log(err);
-        if (address) {
+        if (address || original_url.includes(`http://localhost:${PORT}`)) {
           var urlFound = {};
           async function m() {
             await mongoose.connect(process.env.URI, {
