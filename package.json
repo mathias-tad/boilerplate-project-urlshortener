@@ -21,6 +21,7 @@
   "homepage": "https://github.com/mathias-tad/boilerplate-project-urlshortener#readme",
   "dependencies": {
     "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
     "dns": "^0.2.2",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",

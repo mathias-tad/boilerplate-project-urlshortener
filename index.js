@@ -3,6 +3,7 @@ const express = require("express");
 let bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dns = require("dns");
+const cors = require("cors");
 const app = express();
 const PORT = 5000;
 
@@ -11,6 +12,7 @@ mongoose.connect(process.env.URI, {
   useUnifiedTopology: true,
 });
 
+app.use(cors());
 app.use(express.static(`${process.cwd()}/public`));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -72,7 +74,7 @@ app.get("/api/shorturl/:short", (req, res) => {
     try {
       var urlFounded = await Url.findOne({ _id: short }).exec();
       if (urlFounded) {
-        res.writeHead(301, { location: urlFounded.original_url }).end();
+        res.redirect(301, urlFounded.original_url);
       } else res.json({ error: "No short URL found for the given input" });
     } catch {
       res.json({ error: "No short URL found for the given input" });
