@@ -1,0 +1,30 @@
+{
+  "name": "boilerplate-project-urlshortener",
+  "version": "1.0.0",
+  "description": "This project is done as a certification project for freeCodeCamp back-end development and API program",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathias-tad/boilerplate-project-urlshortener.git"
+  },
+  "keywords": [],
+  "author": "Mathias Bekele",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mathias-tad/boilerplate-project-urlshortener/issues"
+  },
+  "homepage": "https://github.com/mathias-tad/boilerplate-project-urlshortener#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "dns": "^0.2.2",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.15.0",
+    "path": "^0.12.7"
+  }
+}
